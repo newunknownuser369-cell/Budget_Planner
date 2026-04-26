@@ -1,0 +1,11 @@
+body{
+font-family:Arial;
+background:#0d1117;
+color:white;
+padding:20px;
+}
+input,select,button{
+margin:5px;
+padding:5px;
+}
+a{color:red;}

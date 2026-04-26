@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Budget Planner</title>
+</head>
+<body>
+<h1>💰 Budget Planner</h1>
+
+<h3>Income: ₹{{ income }}</h3>
+<form action="/income" method="POST">
+<input name="income" placeholder="Income">
+<button>Set</button>
+</form>
+
+<h3>Budget Setup</h3>
+<form action="/budget" method="POST">
+<input name="need" placeholder="Need">
+<input name="want" placeholder="Want">
+<input name="save" placeholder="Save">
+<button>Set Budget</button>
+</form>
+
+<h3>Add Expense</h3>
+<form action="/add" method="POST">
+<input name="name" placeholder="Name">
+<input name="amt" placeholder="Amount">
+<select name="cat">
+<option>Need</option>
+<option>Want</option>
+<option>Save</option>
+</select>
+<button>Add</button>
+</form>
+
+<h2>📊 Summary</h2>
+{% for c,d in summary.items() %}
+<p>
+<b>{{c}}</b><br>
+Budget: ₹{{d.budget}}<br>
+Spent: ₹{{d.spent}}<br>
+Remaining: ₹{{d.remaining}}
+</p>
+{% endfor %}
+
+<hr>
+
+<h2>🧾 Expenses</h2>
+
+{% for cat, items in expenses.items() %}
+<h3>{{cat}}</h3>
+<ul>
+{% for i in range(items|length) %}
+<li>
+{{items[i][0]}} - ₹{{items[i][1]}}
+
+<!-- delete -->
+<a href="/delete/{{cat}}/{{i}}">❌</a>
+
+<!-- edit form -->
+<form action="/edit" method="POST" style="display:inline;">
+<input type="hidden" name="cat" value="{{cat}}">
+<input type="hidden" name="index" value="{{i}}">
+<input name="name" placeholder="New name">
+<input name="amt" placeholder="New amount">
+<button>✏️</button>
+</form>
+
+</li>
+{% endfor %}
+</ul>
+{% endfor %}
+
+</body>
+</html>

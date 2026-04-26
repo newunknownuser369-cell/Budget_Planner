@@ -2,43 +2,133 @@
 <html>
 <head>
     <title>Budget Planner</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #0f172a;
+            color: white;
+        }
+
+        .header {
+            background: #1e293b;
+            padding: 20px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #38bdf8;
+            border: none;
+            border-radius: 8px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0ea5e9;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .box {
+            background: #334155;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .value {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+    </style>
 </head>
+
 <body>
 
-<h1>💰 Budget Planner</h1>
+<div class="header">
+💰 Budget Planner Dashboard
+</div>
 
-<h3>Income: ₹{{ income }}</h3>
+<div class="container">
 
-<!-- INCOME FORM -->
-<form method="POST" action="/income">
-    <input name="income" placeholder="Enter income">
-    <button type="submit">Set Income</button>
-</form>
+    <!-- INCOME -->
+    <div class="card">
+        <h3>Set Income</h3>
+        <form method="POST" action="/income">
+            <input name="income" placeholder="Enter income">
+            <button type="submit">Update</button>
+        </form>
+        <h4>Current: ₹{{ income }}</h4>
+    </div>
 
-<hr>
+    <!-- BUDGET -->
+    <div class="card">
+        <h3>Set Budget</h3>
+        <form method="POST" action="/budget">
+            <input name="need" placeholder="Need">
+            <input name="want" placeholder="Want">
+            <input name="save" placeholder="Save">
+            <button type="submit">Save Budget</button>
+        </form>
+    </div>
 
-<!-- BUDGET FORM -->
-<h3>Set Budget</h3>
-<form method="POST" action="/budget">
-    Need: <input name="need"><br>
-    Want: <input name="want"><br>
-    Save: <input name="save"><br>
-    <button type="submit">Save Budget</button>
-</form>
+</div>
 
-<hr>
+<!-- SUMMARY -->
+<div class="summary">
 
-<h2>Summary</h2>
+    {% for c, d in summary.items() %}
+    <div class="box">
+        <h3>{{ c }}</h3>
+        <div>Budget</div>
+        <div class="value">₹{{ d.budget }}</div>
 
-{% for c, d in summary.items() %}
-<p>
-<b>{{ c }}</b><br>
-Budget: ₹{{ d.budget }}<br>
-Spent: ₹{{ d.spent }}<br>
-Remaining: ₹{{ d.remaining }}
-</p>
-<hr>
-{% endfor %}
+        <div>Spent</div>
+        <div class="value">₹{{ d.spent }}</div>
+
+        <div>Remaining</div>
+        <div class="value">₹{{ d.remaining }}</div>
+    </div>
+    {% endfor %}
+
+</div>
 
 </body>
 </html>

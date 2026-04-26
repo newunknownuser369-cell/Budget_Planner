@@ -10,11 +10,17 @@ budget = {"Need": 0, "Want": 0, "Save": 0}
 
 def load():
     global income, expenses, budget
-    if os.path.exists(FILE):
-        data = json.load(open(FILE))
-        income = data.get("income", 0)
-        expenses.update(data.get("expenses", expenses))
-        budget.update(data.get("budget", budget))
+    try:
+        if os.path.exists(FILE):
+            with open(FILE) as f:
+                data = json.load(f)
+                income = data.get("income", 0)
+                expenses = data.get("expenses", {"Need": [], "Want": [], "Save": []})
+                budget = data.get("budget", {"Need": 0, "Want": 0, "Save": 0})
+    except:
+        income = 0
+        expenses = {"Need": [], "Want": [], "Save": []}
+        budget = {"Need": 0, "Want": 0, "Save": 0}
 
 def save():
     json.dump({

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Budget Planner</title>
+</head>
+<body>
+
+<h1>💰 Budget Planner</h1>
+
+<h3>Income: ₹{{ income }}</h3>
+
+<h2>Summary</h2>
+
+{% for c, d in summary.items() %}
+<p>
+<b>{{ c }}</b><br>
+Budget: ₹{{ d.budget }}<br>
+Spent: ₹{{ d.spent }}<br>
+Remaining: ₹{{ d.remaining }}
+</p>
+<hr>
+{% endfor %}
+
+</body>
+</html>

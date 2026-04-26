@@ -12,16 +12,18 @@ def load():
     global income, expenses, budget
     try:
         if os.path.exists(FILE):
-            with open(FILE) as f:
+            with open(FILE, "r") as f:
                 data = json.load(f)
+
                 income = data.get("income", 0)
-                expenses = data.get("expenses", {"Need": [], "Want": [], "Save": []})
-                budget = data.get("budget", {"Need": 0, "Want": 0, "Save": 0})
-    except:
+                expenses = data.get("expenses") or {"Need": [], "Want": [], "Save": []}
+                budget = data.get("budget") or {"Need": 0, "Want": 0, "Save": 0}
+
+    except Exception as e:
+        print("LOAD ERROR:", e)
         income = 0
         expenses = {"Need": [], "Want": [], "Save": []}
         budget = {"Need": 0, "Want": 0, "Save": 0}
-
 def save():
     json.dump({
         "income": income,

@@ -9,6 +9,25 @@
 
 <h3>Income: ₹{{ income }}</h3>
 
+<!-- INCOME FORM -->
+<form method="POST" action="/income">
+    <input name="income" placeholder="Enter income">
+    <button type="submit">Set Income</button>
+</form>
+
+<hr>
+
+<!-- BUDGET FORM -->
+<h3>Set Budget</h3>
+<form method="POST" action="/budget">
+    Need: <input name="need"><br>
+    Want: <input name="want"><br>
+    Save: <input name="save"><br>
+    <button type="submit">Save Budget</button>
+</form>
+
+<hr>
+
 <h2>Summary</h2>
 
 {% for c, d in summary.items() %}
